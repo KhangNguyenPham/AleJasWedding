@@ -285,15 +285,15 @@ function App() {
         
         <div className="relative z-20 text-center text-white px-6">
           <h1 className="font-script text-6xl md:text-8xl mb-4 animate-fade-in">
-            <span className="text-pink-400">Đinh Thảo</span>
+            <span className="text-pink-400">Alex</span>
             <span className="bg-gradient-pink-blue bg-clip-text text-transparent"> & </span>
-            <span className="text-blue-400">Ánh Lài</span>
+            <span className="text-blue-400">Jasmine</span>
           </h1>
           <div className="flex items-center justify-center mb-8 text-xl md:text-2xl">
             <span className="inline-flex items-center text-blue-200 bg-clip-text text-transparent">
                 <Calendar className="w-6 h-6 mr-3 text-blue-200" />
             </span>
-            <span className="inline-flex items-center text-blue-200">09 • 10 • 2025</span>
+            <span className="inline-flex items-center text-blue-200">11 • 10 • 2025</span>
           </div>
           <div className="flex items-center justify-center mb-12 text-lg">
             <span className="text-blue-200">
@@ -496,7 +496,7 @@ function App() {
               <div className="space-y-3 text-gray-600">
                 <div className="flex items-center">
                   <Calendar className="w-5 h-5 mr-3 text-blue-500" />
-                  <span>09/10/2025</span>
+                  <span>11/10/2025</span>
                 </div>
                 <div className="flex items-center">
                   <MapPin className="w-5 h-5 mr-3 text-blue-500" />
@@ -604,7 +604,7 @@ function App() {
             <a href="#" className="bg-gradient-to-br from-blue-100 to-blue-50 p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all transform hover:scale-105">
               <Facebook className="w-8 h-8 mx-auto mb-4 text-blue-600" />
               <p className="font-semibold text-gray-800">Facebook</p>
-              <p className="text-gray-600">Ánh Lài & Đinh Thảo</p>
+              <p className="text-gray-600">Alex & Jasmine</p>
             </a>
             
             <a href="#" className="bg-gradient-to-br from-purple-100 to-purple-50 p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all transform hover:scale-105">
@@ -620,8 +620,8 @@ function App() {
       <footer className="bg-gray-800 text-white py-12">
         <div className="container mx-auto px-6 text-center">
           <div className="mb-6">
-            <h3 className="font-script text-3xl mb-2">Đinh Thảo & Ánh Lài</h3>
-            <p className="text-gray-300">09 • 10 • 2025</p>
+            <h3 className="font-script text-3xl mb-2">Alex & Jasmine</h3>
+            <p className="text-gray-300">11 • 10 • 2025</p>
           </div>
           {/* <div className="flex justify-center items-center space-x-2 text-gray-300">
             <Heart className="w-5 h-5 text-red-400" />
