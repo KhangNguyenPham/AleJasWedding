@@ -34,6 +34,9 @@ function App() {
   // const [newWish, setNewWish] = useState({ name: '', message: '' });
   const [wishes, setWishes] = useState<Wish[]>([]);
   const [newWish, setNewWish] = useState({ name: '', message: '' });
+  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState<string | null>(null);
+  const [form, setForm] = useState({ name: "", message: "" });
 
   const scrollToSection = (sectionId: string) => {
     setCurrentSection(sectionId);
@@ -216,29 +219,60 @@ function App() {
   }, [activeFilter]); 
 
   useEffect(() => {
-    fetch(SHEET_API)
-      .then(res => res.json())
-      .then(result => {
+    const fetchWishes = async () => {
+      try {
+        const res = await fetch(SHEET_API);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const result = await res.json();
         const data = Array.isArray(result) ? result : result.data || [];
-        setWishes(
-          data.map((w: any) => ({
-            id: w.id,
-            name: w.name,
-            message: w.message,
-            reactions: {
-              heart: Number(w.heart || 0),
-              party: Number(w.party || 0),
-              love: Number(w.love || 0),
-            },
-            timestamp: new Date(w.created_at || Date.now())
-          }))
-        );
-      })
-      .catch(err => {
+        setWishes(data);
+      } catch (err) {
         console.error("Fetch sheet error:", err);
         setWishes([]);
-      });
+      }
+    };
+
+    fetchWishes();
   }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setStatus(null);
+
+    try {
+      const res = await fetch(SHEET_API, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      const result = await res.json();
+
+      if (res.ok) {
+        setStatus("success");
+        setWishes((prev) => [
+          ...prev,
+          {
+            id: Date.now(),
+            name: form.name,
+            message: form.message,
+            reactions: { heart: 0, party: 0, love: 0 },
+            timestamp: new Date(),
+          },
+        ]);
+
+        setForm({ name: "", message: "" });
+      } else {
+        setStatus(result.message || "error");
+      }
+    } catch (err) {
+      console.error(err);
+      setStatus("error");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const addWish = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -522,31 +556,32 @@ function App() {
           <h2 className="text-4xl font-script text-center mb-16 text-gray-800">Lời chúc từ bạn</h2>
           
           <div className="max-w-4xl mx-auto">
-            <form onSubmit={addWish} className="bg-white rounded-2xl p-8 shadow-lg mb-12">
+            <form onSubmit={handleSubmit} className="bg-white rounded-2xl p-8 shadow-lg mb-12">
               <div className="mb-6">
                 <input
                   type="text"
                   placeholder="Tên của bạn"
-                  value={newWish.name}
-                  onChange={(e) => setNewWish({...newWish, name: e.target.value})}
+                  value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
                   className="w-full p-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-300"
                   required
                 />
               </div>
               <textarea
                 placeholder="Gửi lời chúc đến cặp đôi..."
-                value={newWish.message}
-                onChange={(e) => setNewWish({...newWish, message: e.target.value})}
+                value={form.message}
+                onChange={(e) => setForm({ ...form, message: e.target.value })}
                 rows={4}
                 className="w-full p-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-300 mb-6"
                 required
               />
               <button 
                 type="submit"
+                disabled={loading}
                 className="bg-gradient-to-r from-pink-500 to-blue-500 hover:from-pink-600 hover:to-blue-600 text-white px-8 py-3 rounded-xl transition-all transform hover:scale-105 shadow-lg"
               >
                 <Plus className="inline w-5 h-5 mr-2" />
-                Gửi lời chúc
+                {loading ? "Đang gửi..." : "Gửi lời chúc"}
               </button>
             </form>
 
