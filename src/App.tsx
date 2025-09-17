@@ -86,7 +86,7 @@ function App() {
       title: "Ngày Cầu Hôn",
       date: "Tháng 10, 2023",
       description: "Giờ thì cô ấy đã là vợ tôi",
-      image: "/images/story/3/1-2.JPG"
+      image: "/images/story/3/1-2.jpg"
     }
   ];
 
