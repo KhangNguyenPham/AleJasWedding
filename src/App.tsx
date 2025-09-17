@@ -9,7 +9,7 @@ interface Wish {
   timestamp: Date;
 }
 
-const SHEET_API = "https://script.google.com/macros/s/AKfycbwKYeQGfu0-qiLYTEeGi7ofJyyLMwvCofaJMmHKd476Dxb9mx9olnr9hxNbLHjeADxMVA/exec"
+const SHEET_API = "https://script.google.com/macros/s/AKfycbxrSpjKcpbWkdVqJ9fmma1Y70stP-0H2eThzgOUx1-Uyq28UZPo_53P0QettHw6eB39Mw/exec"
 
 const chunkArray = (arr: any, size: any) => {
   const chunkedArr = [];
