@@ -9,7 +9,7 @@ interface Wish {
   timestamp: Date;
 }
 
-const SHEET_API = "https://script.google.com/macros/s/AKfycbzxaEMEKdss-AXdj-ZagnyIk6sM-AQ81-dsmjhcIXtwAsVCqZID_nFP_SjYE8C0hUbGbQ/exec"
+const SHEET_API = "https://script.google.com/macros/s/AKfycbxPxD1EFc1PBn9FHg92A2RnOOX-Rh6b5-IyyCAJRSv12xHlO7ao2Edlk-MiEIe_AUoljA/exec"
 
 const chunkArray = (arr: any, size: any) => {
   const chunkedArr = [];
@@ -43,6 +43,19 @@ function App() {
     }
   };
 
+  const addToCalendar = () => {
+    const event = {
+      title: 'Đám Cưới Alex & Jasmine',
+      start: '2025-10-11T00:00:00',
+      end: '2025-10-11T23:59:59',
+      description: 'Đám cứoi Đà Lạt - lời tri ân đến bạn bè thân thiết',
+      location: 'TP. Đà Lạt'
+    };
+
+    const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.title)}&dates=${event.start.replace(/[-:]/g, '')}/${event.end.replace(/[-:]/g, '')}&details=${encodeURIComponent(event.description)}&location=${encodeURIComponent(event.location)}`;
+    
+    window.open(googleCalendarUrl, '_blank');
+  };
   // const addWish = (e: React.FormEvent) => {
   //   e.preventDefault();
   //   if (newWish.name.trim() && newWish.message.trim()) {
@@ -503,7 +516,7 @@ function App() {
                   <span>Đà Lạt</span>
                 </div>
               </div>
-              <button className="mt-6 bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-full transition-colors w-full">
+              <button onClick={addToCalendar} className="mt-6 bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-full transition-colors w-full">
                 <Calendar className="inline w-4 h-4 mr-2" />
                 Lưu vào lịch
               </button>
