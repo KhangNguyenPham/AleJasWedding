@@ -218,7 +218,26 @@ function App() {
   useEffect(() => {
     fetch(SHEET_API)
       .then(res => res.json())
-      .then(data => setWishes(data));
+      .then(result => {
+        const data = Array.isArray(result) ? result : result.data || [];
+        setWishes(
+          data.map((w: any) => ({
+            id: w.id,
+            name: w.name,
+            message: w.message,
+            reactions: {
+              heart: Number(w.heart || 0),
+              party: Number(w.party || 0),
+              love: Number(w.love || 0),
+            },
+            timestamp: new Date(w.created_at || Date.now())
+          }))
+        );
+      })
+      .catch(err => {
+        console.error("Fetch sheet error:", err);
+        setWishes([]);
+      });
   }, []);
 
   const addWish = async (e: React.FormEvent) => {
@@ -532,7 +551,7 @@ function App() {
             </form>
 
             <div className="space-y-6">
-              {wishes.map((wish) => (
+              {Array.isArray(wishes) && wishes.map((wish) => (
                 <div key={wish.id} className="bg-white rounded-2xl p-6 shadow-lg">
                   <div className="flex justify-between items-start mb-4">
                     <div>
