@@ -9,7 +9,7 @@ interface Wish {
   timestamp: Date;
 }
 
-const SHEET_API = "https://script.google.com/macros/s/AKfycbxrSpjKcpbWkdVqJ9fmma1Y70stP-0H2eThzgOUx1-Uyq28UZPo_53P0QettHw6eB39Mw/exec"
+const SHEET_API = "/api/sheet"
 
 const chunkArray = (arr: any, size: any) => {
   const chunkedArr = [];
@@ -218,46 +218,17 @@ function App() {
   useEffect(() => {
     fetch(SHEET_API)
       .then(res => res.json())
-      .then(data => setWishes(
-        data.map((w: any) => ({
-          id: w.id,
-          name: w.name,
-          message: w.message,
-          reactions: {
-            heart: Number(w.heart),
-            party: Number(w.party),
-            love: Number(w.love),
-          },
-          timestamp: new Date(w.created_at)
-        }))
-      ));
+      .then(data => setWishes(data));
   }, []);
 
-  // Gửi wish mới
   const addWish = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newWish.name.trim() || !newWish.message.trim()) return;
-
     const res = await fetch(SHEET_API, {
       method: "POST",
-      body: JSON.stringify({
-        name: newWish.name,
-        message: newWish.message
-      }),
-      headers: { "Content-Type": "application/json" }
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newWish),
     });
     const result = await res.json();
-
-    if (result.status === "success") {
-      setWishes([{
-        id: result.id,
-        name: newWish.name,
-        message: newWish.message,
-        reactions: { heart: 0, party: 0, love: 0 },
-        timestamp: new Date()
-      }, ...wishes]);
-      setNewWish({ name: '', message: '' });
-    }
   };
 
   return (
