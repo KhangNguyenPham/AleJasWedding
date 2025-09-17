@@ -72,7 +72,7 @@ function App() {
       title: "Cuộc Phỏng Vấn Định Mệnh",
       date: "Ngày 11 tháng 3 năm 2021",
       description: "Lần đầu gặp nhau, cô ấy là nhân viên của tôi",
-      image: "/images/story/1/1.jpg"
+      image: "/images/story/1/1.JPG"
     },
     {
       icon: <Heart className="w-6 h-6" />,
@@ -86,7 +86,7 @@ function App() {
       title: "Ngày Cầu Hôn",
       date: "Tháng 10, 2023",
       description: "Giờ thì cô ấy đã là vợ tôi",
-      image: "/images/story/3/1-2.jpg"
+      image: "/images/story/3/1-2.JPG"
     }
   ];
 
